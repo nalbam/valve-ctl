@@ -33,7 +33,7 @@ ingress:
   basedomain: 127.0.0.1.nip.io
   hosts: {}
   # hosts:
-  #   - acme.opsnow.com
+  #   - acme.nalbam.com
   annotations:
     kubernetes.io/ingress.class: nginx
     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"

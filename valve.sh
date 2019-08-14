@@ -620,7 +620,7 @@ _helm_repo() {
     CNT=$(helm repo list | grep chartmuseum | wc -l | xargs)
 
     if [ "x${CNT}" == "x0" ] || [ ! -z ${FORCE} ]; then
-        DEFAULT="${CHARTMUSEUM:-chartmuseum.opsnow.com}"
+        DEFAULT="${CHARTMUSEUM:-chartmuseum.nalbam.com}"
         _read "CHARTMUSEUM [${DEFAULT}] : "
         CHARTMUSEUM="${ANSWER:-$DEFAULT}"
 
@@ -745,7 +745,7 @@ _guard() {
     _read "PASSWORD : " s
     PASSWORD=${ANSWER}
 
-    _result "dev: https://kubernetes-dashboard-kube-system.dev.opsnow.com/"
+    _result "dev: https://kubernetes-dashboard-kube-system.dev.nalbam.com/"
 
     _result "token : $(echo -n "${USERNAME}:${PASSWORD}" | base64)"
 
