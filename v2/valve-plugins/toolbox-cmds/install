@@ -1,0 +1,90 @@
+#!/bin/bash
+
+CUR_DIR=${0%/*}
+CUR_NAME=${0##*/}
+
+####### common functions
+source ${ROOT_PLUGINS_DIR}/common.sh
+
+##### 새 기능을 추가할때
+# 1. OPT 추가
+# 2. help message 추가
+# 3. run function 내 case 추가
+# 4. public function (api) 은 _ 로 시작, private function 은 __ 로 시작
+
+
+# 1 point. OPT 추가
+readonly SHORT_OPT="halc"
+readonly LONG_OPT="help,all,local,cluster"
+
+# 2 point. help message 추가
+_help() {
+    cat <<EOF
+================================================================================
+Usage: valve ${CUR_NAME} {Params}
+
+Params:
+    -h, --help                  현재 화면을 보여줍니다.
+
+    -a, --all                   Not yet(All tools)
+    -l, --local                 Not yet(Local tools)
+    -c, --cluster               Not yet(Cluster tools)
+        
+================================================================================
+EOF
+}
+
+_run() {
+
+    OPTIONS=$(getopt -l "${LONG_OPT}" -o "${SHORT_OPT}" -a -- "$@")
+    eval set -- "${OPTIONS}"
+
+    while [ $# -gt 0 ]; do
+# 3 point. case 추가
+        case "$1" in
+            -a|--all)
+                _aoption
+                ;;
+            -l|--local)
+                _boption
+                ;;
+            -c|--cluster)
+                echo "c opt param"
+                ;;
+            *|-h|--help)
+                _help
+                exit 0
+                ;;
+            --)
+                # No more options left.
+                shift
+                break
+               ;;
+        esac
+        shift
+    done
+
+}
+
+##################################################################################
+# 4 point. function 추가
+_aoption() {
+    _result "CUR_DIR : ${CUR_DIR}"
+    _result "CUR_NAME : ${CUR_NAME}"
+    
+    _command "a option"
+}
+
+_boption() {
+    _result "public b func"
+    __private_bopt
+}
+
+__private_bopt() {
+    _result "private b func"
+}
+
+##################################################################################
+
+_run $@
+
